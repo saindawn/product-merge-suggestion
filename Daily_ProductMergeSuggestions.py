@@ -1,5 +1,5 @@
-import os
-from datetime import date, timedelta
+import os, pytz
+from datetime import datetime, timedelta
 
 from merge_utils import DatabaseHandler, MergeSuggestionManager, setup_logger
 
@@ -134,8 +134,8 @@ def main():
         merge_manager = MergeSuggestionManager(db_handler,filename)
         merge = MergeSuggestion(db_handler,merge_manager)
 
-        start_interval_date = (date.today()-timedelta(days=1)).isoformat()
-        end_interval_date   = date.today().isoformat()
+        start_interval_date = (datetime.now(tz=pytz.timezone('Asia/Jakarta'))-timedelta(days=1)).strftime('%Y-%m-%d')
+        end_interval_date   = datetime.now(tz=pytz.timezone('Asia/Jakarta')).strftime('%Y-%m-%d')
 
         # get duplicate data for new products and umarked products
         new_and_unmarked_group_title = merge.find_duplicate_title(start_interval_date,end_interval_date,description='new_and_unmarked')

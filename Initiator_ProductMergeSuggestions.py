@@ -1,5 +1,5 @@
-import os
-from datetime import date
+import os, pytz
+from datetime import datetime
 
 from merge_utils import DatabaseHandler, MergeSuggestionManager, setup_logger
 
@@ -17,7 +17,7 @@ def main():
         merge = MergeSuggestionManager(db_handler,filename)
 
         # Fetch all products
-        initiation_date = date.now().isoformat()
+        initiation_date = datetime.now(tz=pytz.timezone('Asia/Jakarta')).strftime('%Y-%m-%d')
         products_query = f"""
         SELECT 
             CONCAT(UPPER(SUBSTRING_INDEX(SUBSTRING_INDEX(tags, 'ProductID: ', -1), ',', 1)),'-',
