@@ -11,8 +11,7 @@ This repository contains a Python-based system for identifying and managing dupl
   - [Initial Setup](#initial-setup)
   - [Daily Cron Job](#daily-cron-job)
 - [Folder Structure](#folder-structure)
-- [Contributing](#contributing)
-- [License](#license)
+- [Database Indexing Strategy](#database-indexing-strategy)
 
 ## Overview
 This deduplication system works with a database of approximately 350,000 products. It identifies duplicate products based on the following criteria:
@@ -36,12 +35,13 @@ This deduplication system works with a database of approximately 350,000 product
 - Libraries:
   - SQLAlchemy
   - PyMySQL
+  - Polars
   - Pandas
 
 ## Setup Instructions
 ### 1. Clone the Repository
 ```bash
-$ git clone https://github.com/yourusername/product-deduplication-system.git
+$ git clone https://github.com/saindawn/product-merge-suggestion.git
 $ cd product-deduplication-system
 ```
 
@@ -57,7 +57,7 @@ Set up a MySQL database with the provided schema. Update the `connection_string`
 ### 4. Initialize the Database
 Run the `Initiator_ProductMergeSuggestions.py` script to prepare the database for deduplication operations:
 ```bash
-$ python Initiator_ProductMergeSuggestions.py
+$ sudo /path/to/python /path/to/Initiator_ProductMergeSuggestions.py
 ```
 
 ## Usage
@@ -65,7 +65,10 @@ $ python Initiator_ProductMergeSuggestions.py
 Before scheduling daily jobs, ensure the database is initialized using the `Initiator_ProductMergeSuggestions.py` script.
 
 ### Daily Cron Job
-Schedule the `Daily_ProductMergeSuggestions.py` script to run daily for consistent deduplication updates.
+Example cron job configuration:
+```bash
+5 17 * * * sudo /path/to/python /path/to/Daily_ProductMergeSuggestions.py
+```
 
 #### Run Manually
 ```bash
@@ -75,15 +78,22 @@ $ python Daily_ProductMergeSuggestions.py
 ## Folder Structure
 ```
 product-deduplication-system/
-├── merge_utils.py               # Core utilities for database handling and merge logic
 ├── Initiator_ProductMergeSuggestions.py  # Script for initial database setup
 ├── Daily_ProductMergeSuggestions.py      # Script for daily deduplication jobs
-├── requirements.txt            # List of Python dependencies
-├── README.md                   # Documentation
+├── requirements.txt              # List of Python dependencies
+├── README.md                     # Documentation
+├── get_merged_suggestions.sql    # SQL query to retrieve the list of merge suggestions
+├── merge_utils.py                # Core utilities for database handling and merge logic
 ```
+# Database Indexing Strategy
 
-## Contributing
-Contributions are welcome! Please submit a pull request or open an issue for feedback and discussions.
+To optimize the performance of frequently queried fields and improve data retrieval efficiency, the following indexes should be added to the database:
 
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+## SQL Commands for Index Creation
+
+```sql
+-- Add index on product_duplicate_id in product_duplicate_details table
+CREATE INDEX idx_product_duplicate_id ON product_duplicate_details (product_duplicate_id);
+
+-- Add index on updated_at in product_duplicate table
+CREATE INDEX idx_updated_at ON product_duplicate (updated_at);
