@@ -34,8 +34,6 @@ This deduplication system works with a database of approximately 350,000 product
 - MySQL
 - Libraries:
   - SQLAlchemy
-  - PyMySQL
-  - Polars
   - Pandas
 
 ## Setup Instructions
@@ -78,12 +76,12 @@ $ python Daily_ProductMergeSuggestions.py
 ## Folder Structure
 ```
 product-deduplication-system/
-├── Initiator_ProductMergeSuggestions.py  # Script for initial database setup
 ├── Daily_ProductMergeSuggestions.py      # Script for daily deduplication jobs
-├── requirements.txt              # List of Python dependencies
+├── Initiator_ProductMergeSuggestions.py  # Script for initial database setup
 ├── README.md                     # Documentation
 ├── get_merged_suggestions.sql    # SQL query to retrieve the list of merge suggestions
 ├── merge_utils.py                # Core utilities for database handling and merge logic
+├── requirements.txt              # List of Python dependencies
 ```
 # Database Indexing Strategy
 
