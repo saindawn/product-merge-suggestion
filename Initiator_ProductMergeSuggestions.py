@@ -10,7 +10,7 @@ logger   = setup_logger(filename)
 def main():
     try:
         # Database configuration
-        connection_string = "mysql+pymysql://root:admin@localhost/baltiny_dummy1"
+        connection_string = "mysql+pymysql://<user>:<password>@localhost/<database-name>"
         db_handler = DatabaseHandler(connection_string,filename)
 
         # Initialize the deduplication process

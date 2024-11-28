@@ -129,7 +129,7 @@ class MergeSuggestion:
 
 def main():
     try:
-        connection_string = "mysql+pymysql://root:admin@localhost/baltiny_dummy1"
+        connection_string = "mysql+pymysql://<user>:<password>@localhost/<database-name>"
         db_handler = DatabaseHandler(connection_string,filename)
         merge_manager = MergeSuggestionManager(db_handler,filename)
         merge = MergeSuggestion(db_handler,merge_manager)
