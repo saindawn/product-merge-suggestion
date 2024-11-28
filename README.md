@@ -28,6 +28,7 @@ This deduplication system works with a database of approximately 350,000 product
 - Organized insertion of duplicate group information into the database.
 - Daily cron job for continuous updates and management.
 - Logging for monitoring and debugging.
+- For cron and also timestamp on program adapt to UTC+7/WIB Timezone.
 
 ## Requirements
 - Python 3.8+
